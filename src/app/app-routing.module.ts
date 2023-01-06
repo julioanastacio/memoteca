@@ -6,7 +6,7 @@ import { ListThoughtComponent } from './components/thoughts/list-thought/list-th
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'listTought',
+    redirectTo: 'listThought',
     pathMatch: 'full',
   },
   {
