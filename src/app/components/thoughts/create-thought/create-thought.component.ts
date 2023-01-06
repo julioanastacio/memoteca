@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Thought } from '../thought';
+import { ThoughtService } from '../thought.service';
 
 @Component({
   selector: 'app-create-thought',
@@ -9,22 +10,40 @@ import { Thought } from '../thought';
 })
 export class CreateThoughtComponent implements OnInit {
   thought: Thought = {
-    id: 1,
-    content: 'Aprendendo Angular',
-    authorship: 'Dev',
-    model: 'model1',
+    content: '',
+    authorship: '',
+    model: 'modelo1',
   };
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private service: ThoughtService
+  ) {}
 
   createThought() {
-    alert('Kappa');
+    this.service.create(this.thought).subscribe(() => {
+      this.router.navigate(['/listThought']);
+    });
   }
 
   cancelThought() {
     this.router.navigate(['/listThought']);
-    return false;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.route.snapshot.paramMap.get('id')) {
+      const id = this.route.snapshot.paramMap.get('id');
+
+      this.service.listById(parseInt(id!)).subscribe((thought) => {
+        this.thought = thought;
+      });
+    }
+  }
+
+  editThought() {
+    this.service.edit(this.thought).subscribe(() => {
+      this.router.navigate(['/listThought']);
+    });
+  }
 }

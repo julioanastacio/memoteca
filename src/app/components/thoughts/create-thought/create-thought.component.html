@@ -31,7 +31,7 @@
           <input
             type="radio"
             id="model1"
-            value="model1"
+            value="modelo1"
             name="modelo-card"
             [(ngModel)]="thought.model"
           />
@@ -54,7 +54,7 @@
           <input
             type="radio"
             id="model2"
-            value="model2"
+            value="modelo2"
             name="modelo-card"
             [(ngModel)]="thought.model"
           />
@@ -80,7 +80,7 @@
           <input
             type="radio"
             id="model3"
-            value="model3"
+            value="modelo3"
             name="modelo-card"
             [(ngModel)]="thought.model"
           />
@@ -97,13 +97,26 @@
           />
           <p class="content">{{ thought.content }}</p>
           <p class="authorship">
-            <b>{{ thought.authorship }}a</b>
+            <b>{{ thought.authorship }}</b>
           </p>
         </div>
       </div>
     </div>
     <div class="actions">
-      <button (click)="createThought()" class="button">Salvar</button>
+      <button
+        *ngIf="thought.id === undefined"
+        (click)="createThought()"
+        class="button"
+      >
+        Salvar
+      </button>
+      <button
+        *ngIf="thought.id !== 0 && thought.id !== undefined"
+        (click)="editThought()"
+        class="button"
+      >
+        Editar
+      </button>
       <button (click)="cancelThought()" class="button">Cancelar</button>
     </div>
   </form>
